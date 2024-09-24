@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JusticeHub</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin: 0 10px;
+            cursor: pointer;
+            background-color: #fff;
+        }
+
+        .filter-btn.active {
+            background-color: #007BFF;
+            color: white;
+            border-color: #007BFF;
+        }
+
+        .product-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .product-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-card h3 {
+            margin-top: 0;
+        }
+
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .live {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .in-development {
+            background-color: #ffc107;
+            color: white;
+        }
+
+        .more-info {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .more-info a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>JusticeHub</h1>
+
+    <input type="text" id="searchBar" class="search-bar" placeholder="Search for products..." onkeyup="filterProducts()">
+
+    <div class="filters">
+        <button class="filter-btn active" onclick="filterByStatus('all')">All</button>
+        <button class="filter-btn" onclick="filterByStatus('live')">Live</button>
+        <button class="filter-btn" onclick="filterByStatus('in-development')">In Development</button>
+    </div>
+
+    <div class="product-list" id="productList">
+        <div class="product-card" data-status="live">
+            <h3>JusticeLens</h3>
+            <span class="status-badge live">Live</span>
+            <p>Solves delays in court case scheduling.</p>
+            <div class="more-info"><a href="#">More Info</a></div>
+        </div>
+
+        <div class="product-card" data-status="in-development">
+            <h3>RecidivistIQ</h3>
+            <span class="status-badge in-development">In Development</span>
+            <p>Reduces repeat offender rates using AI risk assessment.</p>
+            <div class="more-info"><a href="#">More Info</a></div>
+        </div>
+
+        <div class="product-card" data-status="live">
+            <h3>VictimConnect</h3>
+            <span class="status-badge live">Live</span>
+            <p>Provides real-time updates for crime victims.</p>
+            <div class="more-info"><a href="#">More Info</a></div>
+        </div>
+
+        <div class="product-card" data-status="in-development">
+            <h3>PleaSmart</h3>
+            <span class="status-badge in-development">In Development</span>
+            <p>AI-powered tool for equitable plea deals.</p>
+            <div class="more-info"><a href="#">More Info</a></div>
+        </div>
+
+        <div class="product-card" data-status="live">
+            <h3>PrisonPath</h3>
+            <span class="status-badge live">Live</span>
+            <p>Automates personalized reentry plans for inmates.</p>
+            <div class="more-info"><a href="#">More Info</a></div>
+        </div>
+
+        <div class="product-card" data-status="in-development">
+            <h3>GuardVision</h3>
+            <span class="status-badge in-development">In Development</span>
+            <p>AI monitoring tool to reduce guard screen fatigue.</p>
+            <div class="more-info"><a href="#">More Info</a></div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function filterByStatus(status) {
+        const products = document.querySelectorAll('.product-card');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+
+        if (status === 'all') {
+            filterButtons[0].classList.add('active');
+            products.forEach(product => product.style.display = 'block');
+        } else {
+            document.querySelector(`.filter-btn[onclick="filterByStatus('${status}')"]`).classList.add('active');
+            products.forEach(product => {
+                if (product.getAttribute('data-status') === status) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+    }
+
+    function filterProducts() {
+        const searchQuery = document.getElementById('searchBar').value.toLowerCase();
+        const products = document.querySelectorAll('.product-card');
+
+        products.forEach(product => {
+            const productName = product.querySelector('h3').textContent.toLowerCase();
+            if (productName.includes(searchQuery)) {
+                product.style.display = 'block';
+            } else {
+                product.style.display = 'none';
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
